@@ -1,0 +1,41 @@
+pragma solidity >=0.4.0 <0.6.0;
+
+contract Mortal {
+  
+    address owner;
+
+    string word = "teste world";
+    address issuer;
+
+
+    function Mortal(){
+        issuer = msg.sender;        
+    }
+
+/*    modifier ifIssuer(){
+        if(issuer != msg.sender){
+            throw;
+        }
+        else{
+            word = "teste";
+        }     
+    }*/
+
+
+    function getWord() constant returns(string){
+        return word;
+    }
+    
+    function setWord(string newWord) returns(string){
+        if(issuer != msg.sender){
+            return "Nao eh o criador";
+        }
+        else{
+            word = newWord;
+            return "este eh o criador";
+        }
+        return word;
+    }
+    
+}
+
