@@ -1,0 +1,25 @@
+pragma solidity >=0.4.0 <0.6.0;
+
+contract CallerMortal {
+    CalledMortal toBeCalled = new CalledMortal();
+
+    function getNumber() constant returns(uint){
+        return toBeCalled.getNumber();   
+    }
+    function getWords() constant returns(bytes32){
+        return toBeCalled.getWords();   }    
+    
+}
+
+
+contract CalledMortal {
+    uint number = 42;
+    bytes32 words = "Mama mia";
+    
+    function getNumber() constant returns(uint){
+        return number;   
+    }
+    function getWords() constant returns(bytes32){
+        return words;    
+    }
+}
