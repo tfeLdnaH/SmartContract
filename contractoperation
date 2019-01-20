@@ -1,0 +1,44 @@
+//send etheriun money
+pragma solidity >=0.4.0 <0.6.0;
+
+contract CustodiaContract{
+    address cliente;
+    bool _switch = false;
+    
+    function CustodiaContract(){
+        cliente = msg.sender;
+    }  
+    
+    event UpdateStatus(string _msg, uint _amount);
+    event UserStatus(string _msg, address user, uint amount);
+    
+    
+    modifier ifcliente(){
+        if(msg.sender != cliente){
+            throw;
+        }
+        _;
+    }
+    
+    function depositFunds() payable {
+        //UpdateStatus("Deposito efetuado:", msg.value);
+        UserStatus("Usuario tranferiu dinheiro", msg.sender, msg.value);
+    }
+    
+    function witdrawFunds(uint amount){
+        if (msg.sender == cliente) {
+        if (cliente.send(amount)){//return boolean
+            UpdateStatus("Transferido dinheiro", msg.value);    
+            _switch = true;}
+        } 
+        else {
+            _switch = false;
+            throw;
+        }
+    }
+    
+    function getterFund() constant returns(uint){
+        return this.balance;    
+    }
+    
+}
